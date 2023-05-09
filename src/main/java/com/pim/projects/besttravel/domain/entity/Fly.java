@@ -2,11 +2,20 @@ package com.pim.projects.besttravel.domain.entity;
 
 import com.pim.projects.besttravel.util.Airline;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data //include getters, setters(non-final fields), toString, RequiredArgsConstructor and EqualsAndHashCode for mutable classes
+@Builder //creates automatically a builder for our class with all the properties
 @Entity(name = "fly")
 public class Fly {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

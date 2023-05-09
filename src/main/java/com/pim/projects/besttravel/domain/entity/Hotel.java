@@ -1,9 +1,17 @@
 package com.pim.projects.besttravel.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 @Entity(name = "hotel")
 public class Hotel {
 
