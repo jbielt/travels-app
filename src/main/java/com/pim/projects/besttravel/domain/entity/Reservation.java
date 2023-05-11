@@ -36,7 +36,12 @@ public class Reservation {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
-
+    @ManyToOne
+    @JoinColumn(
+            name = "tour_id",
+            nullable = true
+    )
+    private Tour tour;
 
 
 

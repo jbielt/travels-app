@@ -35,5 +35,12 @@ public class Ticket {
     @JoinColumn(name = "fly_id")
     private Fly fly;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "tour_id",
+            nullable = true
+    )
+    private Tour tour;
+
 
 }

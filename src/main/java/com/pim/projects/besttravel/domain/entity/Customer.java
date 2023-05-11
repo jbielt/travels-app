@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 public class Customer {
 
     @Id
-    @Column(name = "dni")
-    private String id;
+    private String dni;
 
     @Column(length = 50)
     private String fullName;
