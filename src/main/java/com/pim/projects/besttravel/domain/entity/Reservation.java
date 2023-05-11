@@ -32,6 +32,10 @@ public class Reservation {
 
     private BigDecimal price;
 
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
 
 
 
