@@ -42,5 +42,9 @@ public class Ticket {
     )
     private Tour tour;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 
 }
