@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -39,5 +40,13 @@ public class Fly {
 
     @Enumerated(EnumType.STRING)
     private Airline airline;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "fly"
+    )
+    private Set<Ticket> tickets;
 
 }
