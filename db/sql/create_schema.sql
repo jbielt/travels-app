@@ -19,7 +19,7 @@ CREATE TABLE fly
     destiny_lat  decimal NOT NULL,
     origin_name  varchar(20) NOT NULL,
     destiny_name varchar(20) NOT NULL,
-    aero_line varchar(20) NOT NULL,
+    airline varchar(20) NOT NULL,
     price double precision NOT NULL,
     CONSTRAINT pk_fly PRIMARY KEY ( "id" )
 );
