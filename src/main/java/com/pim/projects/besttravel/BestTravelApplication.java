@@ -62,7 +62,15 @@ public class BestTravelApplication implements CommandLineRunner {
 //        this.flyRepository.findByPriceBetween(BigDecimal.valueOf(10), BigDecimal.valueOf(15)).forEach(fly -> System.out.println(fly));
 //        this.flyRepository.findByOriginAndDestiny("Grecia", "Mexico").forEach(fly -> System.out.println(fly));
 
-        var fly = flyRepository.findByTicketId(UUID.fromString("42345678-1234-5678-5233-567812345678"));
-        System.out.println(fly);
+//        var fly = flyRepository.findByTicketId(UUID.fromString("42345678-1234-5678-5233-567812345678"));
+//        System.out.println(fly);
+
+//        hotelRepository.findByPriceLessThan(BigDecimal.valueOf(100)).forEach(hotel -> System.out.println(hotel));
+
+//        hotelRepository.findByPriceIsBetween(BigDecimal.valueOf(50), BigDecimal.valueOf(100)).forEach(hotel -> System.out.println(hotel));
+
+
+        hotelRepository.findByRatingGreaterThan(4).forEach(hotel -> System.out.println(hotel));
+
     }
 }
