@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -62,8 +63,20 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public TicketResponse update(TicketRequest request, UUID uuid) {
-        return null;
+    public TicketResponse update(TicketRequest request, UUID id) {
+        var ticketToUpdate = ticketRepository.findById(id).orElseThrow();
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+
+        ticketToUpdate.setFly(fly);
+        ticketToUpdate.setPrice(BigDecimal.valueOf(0.25));
+        ticketToUpdate.setDepartureDate(LocalDateTime.now());
+        ticketToUpdate.setArrivalDate(LocalDateTime.now());
+
+        var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
+
+        log.info("Ticket updatedwith id {}", ticketUpdated.getId());
+
+        return this.entityToResponse(ticketUpdated);
     }
 
     @Override
