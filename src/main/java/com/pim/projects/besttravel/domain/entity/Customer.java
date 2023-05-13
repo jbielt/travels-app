@@ -30,6 +30,8 @@ public class Customer {
 
     private Integer totalTours;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
@@ -52,7 +54,7 @@ public class Customer {
     @EqualsAndHashCode.Exclude
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "customer"
     )

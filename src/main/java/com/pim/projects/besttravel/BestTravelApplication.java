@@ -1,5 +1,8 @@
 package com.pim.projects.besttravel;
 
+import com.pim.projects.besttravel.domain.entity.Reservation;
+import com.pim.projects.besttravel.domain.entity.Ticket;
+import com.pim.projects.besttravel.domain.entity.Tour;
 import com.pim.projects.besttravel.domain.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -46,36 +51,53 @@ public class BestTravelApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        var fly = flyRepository.findById(15L).get(); //we use .get() because if not returns Optional
-//        var hotel = hotelRepository.findById(7L).get();
-//        var ticket = ticketRepository.findById(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
-//        var reservation = reservationRepository.findById(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
-//        var customer = customerRepository.findById("BBMB771012HMCRR022").get();
 
-//        log.info(String.valueOf(fly));
-//        log.info(String.valueOf(hotel));
-//        log.info(String.valueOf(ticket));
-//        log.info(String.valueOf(reservation));
-//        log.info(String.valueOf(customer));
+        var customer = customerRepository.findById("GOTW771012HMRGR087").orElseThrow();
+        log.info("Customer name: " + customer.getFullName());
 
-//        this.flyRepository.findByPriceLessThan(BigDecimal.valueOf(20)).forEach(fly -> System.out.println(fly));
-//        this.flyRepository.findByPriceBetween(BigDecimal.valueOf(10), BigDecimal.valueOf(15)).forEach(fly -> System.out.println(fly));
-//        this.flyRepository.findByOriginAndDestiny("Grecia", "Mexico").forEach(fly -> System.out.println(fly));
+        var fly = flyRepository.findById(11L).orElseThrow();
+        log.info("Fly name " + fly.getOriginName() + "-" + fly.getDestinyName());
 
-//        var fly = flyRepository.findByTicketId(UUID.fromString("42345678-1234-5678-5233-567812345678"));
-//        System.out.println(fly);
+        var hotel = hotelRepository.findById(3L).orElseThrow();
+        log.info("Hotel name: " + hotel.getName());
 
-//        hotelRepository.findByPriceLessThan(BigDecimal.valueOf(100)).forEach(hotel -> System.out.println(hotel));
+        var tour = Tour.builder()
+                .customer(customer)
+                .build();
 
-//        hotelRepository.findByPriceIsBetween(BigDecimal.valueOf(50), BigDecimal.valueOf(100)).forEach(hotel -> System.out.println(hotel));
+        var ticket = Ticket.builder()
+                .id(UUID.randomUUID())
+                .price(fly.getPrice().multiply(BigDecimal.TEN))
+                .arrivalDate(LocalDate.now())
+                .departureDate(LocalDate.now())
+                .purchaseDate(LocalDate.now())
+                .customer(customer)
+                .tour(tour)
+                .fly(fly)
+                .build();
 
+        var reservation = Reservation.builder()
+                .id(UUID.randomUUID())
+                .dateTimeReservation(LocalDateTime.now())
+                .dateEnd(LocalDate.now().plusDays(2))
+                .dateStart(LocalDate.now().plusDays(1))
+                .hotel(hotel)
+                .customer(customer)
+                .tour(tour)
+                .totalDays(1)
+                .price(hotel.getPrice().multiply(BigDecimal.TEN))
+                .build();
 
-//        hotelRepository.findByRatingGreaterThan(4).forEach(hotel -> System.out.println(hotel));
+        System.out.println("----SAVING TOUR-----");
 
-        var hotel = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678"));
-        System.out.println(hotel);
+        tour.addReservation(reservation);
+        tour.updateReservations();
+        tour.addTicket(ticket);
+        tour.updateTickets();
 
-
+        var tourSaved = this.tourRepository.save(tour);
+        Thread.sleep(8000);
+        this.tourRepository.deleteById(tourSaved.getId());
 
     }
 }
