@@ -1,9 +1,8 @@
 package com.pim.projects.besttravel.infrastructure.services;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import com.pim.projects.besttravel.api.models.request.TicketRequest;
-import com.pim.projects.besttravel.api.models.responses.FlyResponse;
-import com.pim.projects.besttravel.api.models.responses.TicketResponse;
+import com.pim.projects.besttravel.api.model.request.TicketRequest;
+import com.pim.projects.besttravel.api.model.responses.FlyResponse;
+import com.pim.projects.besttravel.api.model.responses.TicketResponse;
 import com.pim.projects.besttravel.domain.entity.Ticket;
 import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.FlyRepository;
@@ -15,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Transactional
@@ -29,7 +31,27 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse create(TicketRequest request) {
-        return null;
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+        var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
+
+        //create ticket to persist to db with the fly and customer request info
+        var ticketToPersist = Ticket.builder()
+                .id(UUID.randomUUID())
+                .fly(fly)
+                .customer(customer)
+                .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+                .purchaseDate(LocalDate.now())
+                .arrivalDate(LocalDateTime.now())
+                .departureDate(LocalDateTime.now())
+                .build();
+
+        //persist ticket
+        var ticketPersisted = this.ticketRepository.save(ticketToPersist);
+
+        log.info("Ticket saved with id: {}", ticketPersisted.getId());
+
+        //return entity mapped to DTO response
+        return this.entityToResponse(ticketPersisted);
     }
 
     @Override

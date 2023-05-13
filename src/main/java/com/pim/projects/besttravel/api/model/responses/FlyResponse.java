@@ -1,4 +1,4 @@
-package com.pim.projects.besttravel.api.models.responses;
+package com.pim.projects.besttravel.api.model.responses;
 
 import com.pim.projects.besttravel.util.Airline;
 import lombok.AllArgsConstructor;
