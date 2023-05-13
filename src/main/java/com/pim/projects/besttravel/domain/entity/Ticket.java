@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -24,9 +25,9 @@ public class Ticket implements Serializable {
     @Id
     private UUID id;
 
-    private LocalDate departureDate;
+    private LocalDateTime departureDate;
 
-    private LocalDate arrivalDate;
+    private LocalDateTime arrivalDate;
 
     private LocalDate purchaseDate;
 
