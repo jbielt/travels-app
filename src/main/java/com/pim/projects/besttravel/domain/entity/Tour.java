@@ -58,6 +58,10 @@ public class Tour {
         this.tickets.removeIf(ticket -> ticket.getId().equals(id));
     }
 
+    //entity listeners annotations example (only void methods, methods without params, only 1 can be used at the same class)
+    @PreRemove //execute when remove
+    @PreUpdate //execute when update
+    @PrePersist //execute when insert
     public void updateTickets(){
         this.tickets.forEach(ticket -> ticket.setTour(this));
     }
