@@ -1,6 +1,6 @@
 package com.pim.projects.besttravel.api.model.responses;
 
-import com.pim.projects.besttravel.util.Airline;
+import com.pim.projects.besttravel.util.enums.Airline;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

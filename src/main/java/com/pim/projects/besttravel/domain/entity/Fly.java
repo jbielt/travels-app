@@ -1,6 +1,6 @@
 package com.pim.projects.besttravel.domain.entity;
 
-import com.pim.projects.besttravel.util.Airline;
+import com.pim.projects.besttravel.util.enums.Airline;
 import jakarta.persistence.*;
 import lombok.*;
 
