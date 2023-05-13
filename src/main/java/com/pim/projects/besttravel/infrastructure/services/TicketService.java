@@ -56,7 +56,9 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse read(UUID uuid) {
-        return null;
+        var ticketFromDB = this.ticketRepository.findById(uuid).orElseThrow();
+
+        return this.entityToResponse(ticketFromDB);
     }
 
     @Override
