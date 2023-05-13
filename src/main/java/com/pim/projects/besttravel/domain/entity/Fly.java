@@ -4,6 +4,7 @@ import com.pim.projects.besttravel.util.Airline;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Data //include getters, setters(non-final fields), toString, RequiredArgsConstructor and EqualsAndHashCode for mutable classes
 @Builder //creates automatically a builder for our class with all the properties
 @Entity(name = "fly")
-public class Fly {
+public class Fly implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

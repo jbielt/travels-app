@@ -3,6 +3,7 @@ package com.pim.projects.besttravel.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity(name = "tour")
-public class Tour {
+public class Tour implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

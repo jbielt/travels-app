@@ -3,6 +3,7 @@ package com.pim.projects.besttravel.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @Data
 @Builder
 @Entity(name = "hotel")
-public class Hotel {
+public class Hotel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

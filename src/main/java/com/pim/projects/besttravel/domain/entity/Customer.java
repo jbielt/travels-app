@@ -3,6 +3,7 @@ package com.pim.projects.besttravel.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -10,7 +11,7 @@ import java.util.Set;
 @Data
 @Builder
 @Entity(name = "customer")
-public class Customer {
+public class Customer implements Serializable {
 
     @Id
     private String dni;
