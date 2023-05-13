@@ -8,6 +8,7 @@ import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.FlyRepository;
 import com.pim.projects.besttravel.domain.repository.TicketRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITicketService;
+import com.pim.projects.besttravel.util.BestTravelUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,8 +45,8 @@ public class TicketService implements ITicketService {
                 .customer(customer)
                 .price(fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE)))
                 .purchaseDate(LocalDate.now())
-                .arrivalDate(LocalDateTime.now())
-                .departureDate(LocalDateTime.now())
+                .departureDate(BestTravelUtil.getRandomSoonDate())
+                .arrivalDate(BestTravelUtil.getRandomLaterDate())
                 .build();
 
         //persist ticket
@@ -71,8 +72,8 @@ public class TicketService implements ITicketService {
 
         ticketToUpdate.setFly(fly);
         ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE)));
-        ticketToUpdate.setDepartureDate(LocalDateTime.now());
-        ticketToUpdate.setArrivalDate(LocalDateTime.now());
+        ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomLaterDate());
+        ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLaterDate());
 
         var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
 
