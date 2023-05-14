@@ -10,7 +10,7 @@ public interface CatalogService <RS>{
 
     Page<RS> readAll(Integer page, Integer size, SortType sortType);
 
-    Set<RS> readLowerPrice(BigDecimal price);
+    Set<RS> readByLowerPrice(BigDecimal price);
 
     Set<RS> readBetweenPrices(BigDecimal min, BigDecimal max);
 
