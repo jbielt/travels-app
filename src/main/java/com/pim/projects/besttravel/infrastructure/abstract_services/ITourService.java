@@ -3,7 +3,6 @@ package com.pim.projects.besttravel.infrastructure.abstract_services;
 import com.pim.projects.besttravel.api.model.request.TourRequest;
 import com.pim.projects.besttravel.api.model.responses.TourResponse;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 public interface ITourService extends SimpleCrudService<TourRequest, TourResponse, Long> {
