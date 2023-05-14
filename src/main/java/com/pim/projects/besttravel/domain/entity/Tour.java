@@ -44,44 +44,12 @@ public class Tour implements Serializable {
     @JoinColumn(name = "id_customer")
     private Customer customer;
 
-
-    public void addTicket(Ticket ticket){
-        if(Objects.isNull(this.tickets)){
-            this.tickets = new HashSet<>();
-        }
-        this.tickets.add(ticket);
-    }
-
-    public void removeTicket(UUID id){
-        if(Objects.isNull(this.tickets)){
-            this.tickets = new HashSet<>();
-        }
-        this.tickets.removeIf(ticket -> ticket.getId().equals(id));
-    }
-
-    //entity listeners annotations example (only void methods, methods without params, only 1 can be used at the same class)
-    @PreRemove //execute when remove
-    @PreUpdate //execute when update
-    @PrePersist //execute when insert
-    public void updateTickets(){
+    @PrePersist
+    @PreRemove
+    public void updateFk(){
         this.tickets.forEach(ticket -> ticket.setTour(this));
-    }
-
-    public void addReservation(Reservation reservation){
-        if(Objects.isNull(this.reservations)){
-            this.reservations = new HashSet<>();
-        }
-        this.reservations.add(reservation);
-    }
-
-    public void removeReservation(UUID id){
-        if(Objects.isNull(this.reservations)){
-            this.reservations = new HashSet<>();
-        }
-        this.reservations.removeIf(reservation -> reservation.getId().equals(id));
-    }
-
-    public void updateReservations(){
         this.reservations.forEach(reservation -> reservation.setTour(this));
     }
+
+
 }
