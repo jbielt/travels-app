@@ -1,5 +1,6 @@
 package com.pim.projects.besttravel.api.model.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pim.projects.besttravel.domain.entity.Hotel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +20,17 @@ import java.util.UUID;
 public class ReservationResponse implements Serializable {
 
     private UUID id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTimeReservation;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateStart;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateEnd;
+
     private Integer totalDays;
     private BigDecimal price;
-    private Hotel hotel;
+    private HotelResponse hotel;
 }

@@ -29,7 +29,7 @@ public class TicketService implements ITicketService {
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
 
-    private static final BigDecimal CHARGER_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
+    private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 
     @Override
     public TicketResponse create(TicketRequest request) {
@@ -41,7 +41,7 @@ public class TicketService implements ITicketService {
                 .id(UUID.randomUUID())
                 .fly(fly)
                 .customer(customer)
-                .price(fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE)))
+                .price(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
                 .purchaseDate(LocalDate.now())
                 .departureDate(BestTravelUtil.getRandomSoonDate())
                 .arrivalDate(BestTravelUtil.getRandomLaterDate())
@@ -69,13 +69,13 @@ public class TicketService implements ITicketService {
         var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
 
         ticketToUpdate.setFly(fly);
-        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE)));
+        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
         ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomLaterDate());
         ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLaterDate());
 
         var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
 
-        log.info("Ticket updatedwith id {}", ticketUpdated.getId());
+        log.info("Ticket updated with id {}", ticketUpdated.getId());
 
         return this.entityToResponse(ticketUpdated);
     }
@@ -89,7 +89,7 @@ public class TicketService implements ITicketService {
     @Override
     public BigDecimal findFlyPrice(Long flyId) {
         var fly = this.flyRepository.findById(flyId).orElseThrow();
-        return fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE));
+        return fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
     }
 
 
