@@ -31,7 +31,7 @@ public class FlyService implements IFlyService {
             case LOWER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
             case UPPER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
         }
-        return this.flyRepository.findAll(pageRequest).map(this::entityToResponse);
+        return this.flyRepository.findAll(pageRequest).map(FlyResponse -> this.entityToResponse(FlyResponse)); //we can use method reference, but we use this for now to understand better
     }
 
     @Override
