@@ -67,13 +67,19 @@ public class TourService implements ITourService {
     }
 
     @Override
-    public TourResponse read(Long aLong) {
-        return null;
+    public TourResponse read(Long id) {
+        var tourFromDB = this.tourRepository.findById(id).orElseThrow();
+        return TourResponse.builder()
+                .reservationIds(tourFromDB.getReservations().stream().map(Reservation -> Reservation.getId()).collect(Collectors.toSet()))
+                .ticketIds(tourFromDB.getTickets().stream().map(Ticket -> Ticket.getId()).collect(Collectors.toSet()))
+                .id(tourFromDB.getId())
+                .build();
     }
 
     @Override
-    public void delete(Long aLong) {
-
+    public void delete(Long id) {
+        var tourToDelete = this.tourRepository.findById(id).orElseThrow();
+        this.tourRepository.delete(tourToDelete);
     }
 
     @Override
