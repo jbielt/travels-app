@@ -64,4 +64,17 @@ public class TourHelper {
 
         return response;
     }
+
+    public Ticket createTicket(Fly fly, Customer customer){
+        var ticketToPersist = Ticket.builder()
+                .id(UUID.randomUUID())
+                .fly(fly)
+                .customer(customer)
+                .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
+                .purchaseDate(LocalDate.now())
+                .departureDate(BestTravelUtil.getRandomSoonDate())
+                .arrivalDate(BestTravelUtil.getRandomLaterDate())
+                .build();
+        return this.ticketRepository.save(ticketToPersist);
+    }
 }
