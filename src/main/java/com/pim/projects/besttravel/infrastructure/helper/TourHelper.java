@@ -26,7 +26,7 @@ public class TourHelper {
     private final ReservationRepository reservationRepository;
 
 
-    private Set<Ticket> createTickets(Set<Fly> flights, Customer customer){
+    public Set<Ticket> createTickets(Set<Fly> flights, Customer customer){
         var response = new HashSet<Ticket>(flights.size());
         flights.forEach(fly -> {
             var ticketToPersist = Ticket.builder()
@@ -45,7 +45,7 @@ public class TourHelper {
         return response;
     }
 
-    private Set<Reservation> createReservations(HashMap<Hotel, Integer> hotels, Customer customer){
+    public Set<Reservation> createReservations(HashMap<Hotel, Integer> hotels, Customer customer){
         var response = new HashSet<Reservation>(hotels.size());
         hotels.forEach((hotel, totalDays) -> {
             var reservationToPersist = Reservation.builder()
