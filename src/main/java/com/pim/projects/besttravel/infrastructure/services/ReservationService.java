@@ -1,12 +1,9 @@
 package com.pim.projects.besttravel.infrastructure.services;
 
 import com.pim.projects.besttravel.api.model.request.ReservationRequest;
-import com.pim.projects.besttravel.api.model.responses.FlyResponse;
 import com.pim.projects.besttravel.api.model.responses.HotelResponse;
 import com.pim.projects.besttravel.api.model.responses.ReservationResponse;
-import com.pim.projects.besttravel.api.model.responses.TicketResponse;
 import com.pim.projects.besttravel.domain.entity.Reservation;
-import com.pim.projects.besttravel.domain.entity.Ticket;
 import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.ReservationRepository;
@@ -15,7 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
