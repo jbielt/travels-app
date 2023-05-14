@@ -4,7 +4,6 @@ import com.pim.projects.besttravel.api.model.responses.FlyResponse;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IFlyService;
 import com.pim.projects.besttravel.util.enums.SortType;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

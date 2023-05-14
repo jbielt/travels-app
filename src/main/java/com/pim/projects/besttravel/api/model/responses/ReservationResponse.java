@@ -1,7 +1,6 @@
 package com.pim.projects.besttravel.api.model.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pim.projects.besttravel.domain.entity.Hotel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

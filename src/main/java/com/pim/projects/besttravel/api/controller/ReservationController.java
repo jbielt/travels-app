@@ -1,9 +1,7 @@
 package com.pim.projects.besttravel.api.controller;
 
 import com.pim.projects.besttravel.api.model.request.ReservationRequest;
-import com.pim.projects.besttravel.api.model.request.TicketRequest;
 import com.pim.projects.besttravel.api.model.responses.ReservationResponse;
-import com.pim.projects.besttravel.api.model.responses.TicketResponse;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IReservationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
 package com.pim.projects.besttravel.api.controller;
 
-import com.pim.projects.besttravel.api.model.responses.FlyResponse;
 import com.pim.projects.besttravel.api.model.responses.HotelResponse;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IHotelService;
 import com.pim.projects.besttravel.util.enums.SortType;
