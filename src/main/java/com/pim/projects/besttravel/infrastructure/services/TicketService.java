@@ -10,6 +10,7 @@ import com.pim.projects.besttravel.domain.repository.TicketRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITicketService;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.util.BestTravelUtil;
+import com.pim.projects.besttravel.util.exception.IdNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -35,8 +36,8 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse create(TicketRequest request) {
-        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
-        var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow(() -> new IdNotFoundException("fly"));
+        var customer = customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException("customer"));
 
         //create ticket to persist to db with the fly and customer request info
         var ticketToPersist = Ticket.builder()
@@ -63,15 +64,15 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse read(UUID uuid) {
-        var ticketFromDB = this.ticketRepository.findById(uuid).orElseThrow();
+        var ticketFromDB = this.ticketRepository.findById(uuid).orElseThrow(() -> new IdNotFoundException("ticket"));
 
         return this.entityToResponse(ticketFromDB);
     }
 
     @Override
     public TicketResponse update(TicketRequest request, UUID id) {
-        var ticketToUpdate = ticketRepository.findById(id).orElseThrow();
-        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+        var ticketToUpdate = ticketRepository.findById(id).orElseThrow(() -> new IdNotFoundException("ticket"));
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow(() -> new IdNotFoundException("fly"));
 
         ticketToUpdate.setFly(fly);
         ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
@@ -87,13 +88,13 @@ public class TicketService implements ITicketService {
 
     @Override
     public void delete(UUID id) {
-        var ticketToDelete = ticketRepository.findById(id).orElseThrow();
+        var ticketToDelete = ticketRepository.findById(id).orElseThrow(() -> new IdNotFoundException("ticket"));
         this.ticketRepository.delete(ticketToDelete);
     }
 
     @Override
     public BigDecimal findFlyPrice(Long flyId) {
-        var fly = this.flyRepository.findById(flyId).orElseThrow();
+        var fly = this.flyRepository.findById(flyId).orElseThrow(() -> new IdNotFoundException("fly"));
         return fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
     }
 
