@@ -2,7 +2,7 @@ package com.pim.projects.besttravel.util.enums;
 
 public enum Tables {
     customer,
-    fly,
+    flight,
     hotel,
     tour,
     reservation,

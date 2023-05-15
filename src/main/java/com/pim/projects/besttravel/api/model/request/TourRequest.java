@@ -20,7 +20,10 @@ public class TourRequest implements Serializable {
     @NotBlank(message = "Id customer is mandatory")
     public String customerId;
 
-    private Set<TourFlyRequest> flights;
+    @Size(min = 1, message = "Min flight tour per tour")
+    private Set<TourFlightRequest> flights;
+
+    @Size(min = 1, message = "Min hotel tour per tour")
     private Set<TourHotelRequest> hotels;
 
 }

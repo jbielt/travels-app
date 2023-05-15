@@ -18,7 +18,7 @@ INSERT INTO hotel (name, address, rating, price) VALUES
                                                      ('Cascade', 'Canada 89', 4, 22.99),
                                                      ('Pino', 'Canada 38', 4, 99.42);
 
-insert into fly (origin_lat, origin_lng, destiny_lng, destiny_lat, origin_name, destiny_name, airline, price) VALUES
+insert into flight (origin_lat, origin_lng, destiny_lng, destiny_lat, origin_name, destiny_name, airline, price) VALUES
                                                                                                                     (99.9999, 88.8888, 11.1111, 22.2222, 'Mexico', 'Grecia', 'aero_gold', 43.00),
                                                                                                                     (11.1111, 22.2222, 99.9999, 88.8888, 'Grecia', 'Mexico','aero_gold', 33.33),
                                                                                                                     (99.9999, 88.8888, 88.8888, 77.7777, 'Mexico', 'Iceland', 'aero_gold', 48.70),
@@ -47,7 +47,7 @@ insert into reservation (id, date_reservation,  hotel_id, customer_id, date_star
                                                                                                                     ('32345678-1234-5678-1234-567812345678', now(), 3, 'VIKI771012HMCRG093', '2024-08-01', '2024-08-01', 4, 112.00),
                                                                                                                     ('52345678-1234-5678-1234-567812345678', now(), 3, 'VIKI771012HMCRG093', '2024-08-12', '2020-01-14', 2, 74.00);
 
-insert into ticket (id, price, fly_id, customer_id, departure_date, arrival_date, purchase_date) VALUES
+insert into ticket (id, price, flight_id, customer_id, departure_date, arrival_date, purchase_date) VALUES
                                                                                                      ('12345678-1234-5678-2236-567812345678', 330.05, 1, 'BBMB771012HMCRR022', '2024-08-01 14:00:00', '2024-08-01 16:00:00',now()),
                                                                                                      ('22345678-1234-5678-3235-567812345678', 220.33, 1, 'VIKI771012HMCRG093', '2024-08-01 14:00:00', '2024-08-01 16:00:00', now()),
                                                                                                      ('32345678-1234-5678-4234-567812345678', 320.00, 4, 'VIKI771012HMCRG093', '2024-08-01 12:00:00', '2024-08-01 15:00:00', now()),

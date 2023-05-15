@@ -31,8 +31,8 @@ public class Ticket implements Serializable {
     private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fly_id")
-    private Fly fly;
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

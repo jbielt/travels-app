@@ -30,5 +30,5 @@ public class TicketResponse implements Serializable {
     private LocalDate purchaseDate;
 
     private BigDecimal price;
-    private FlyResponse fly;
+    private FlightResponse flight;
 }

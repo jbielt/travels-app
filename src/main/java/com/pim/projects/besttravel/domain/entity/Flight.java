@@ -13,8 +13,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Data //include getters, setters(non-final fields), toString, RequiredArgsConstructor and EqualsAndHashCode for mutable classes
 @Builder //creates automatically a builder for our class with all the properties
-@Entity(name = "fly")
-public class Fly implements Serializable {
+@Entity(name = "flight")
+public class Flight implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class Fly implements Serializable {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             orphanRemoval = true,
-            mappedBy = "fly"
+            mappedBy = "flight"
     )
     private Set<Ticket> tickets;
 

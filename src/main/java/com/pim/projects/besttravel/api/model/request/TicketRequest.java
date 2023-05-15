@@ -23,5 +23,5 @@ public class TicketRequest implements Serializable {
 
     @Positive
     @NotNull(message = "Id Hotel is mandatory")
-    private Long idFly;
+    private Long idFlight;
 }

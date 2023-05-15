@@ -9,7 +9,7 @@ public interface ITourService extends SimpleCrudService<TourRequest, TourRespons
 
     void removeTicket(Long tourId, UUID ticketId);
 
-    UUID addTicket(Long flyId, Long tourId);
+    UUID addTicket(Long flightId, Long tourId);
 
     void removeReservation(Long tourId, UUID reservationId);
 

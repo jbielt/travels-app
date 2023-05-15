@@ -1,7 +1,7 @@
 package com.pim.projects.besttravel.api.controller;
 
-import com.pim.projects.besttravel.api.model.responses.FlyResponse;
-import com.pim.projects.besttravel.infrastructure.abstract_services.IFlyService;
+import com.pim.projects.besttravel.api.model.responses.FlightResponse;
+import com.pim.projects.besttravel.infrastructure.abstract_services.IFlightService;
 import com.pim.projects.besttravel.util.enums.SortType;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,40 +13,40 @@ import java.util.Objects;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = "fly")
+@RequestMapping(path = "flight")
 @AllArgsConstructor
-public class FlyController {
+public class FlightController {
 
-    private final IFlyService flyService;
+    private final IFlightService flightService;
 
 
     @GetMapping
-    public ResponseEntity<Page<FlyResponse>> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestHeader(required = false) SortType sortType){
+    public ResponseEntity<Page<FlightResponse>> getAll(@RequestParam Integer page, @RequestParam Integer size, @RequestHeader(required = false) SortType sortType){
         if(Objects.isNull(sortType)){
             sortType = SortType.NONE;
         }
-        var response = this.flyService.readAll(page, size, sortType);
+        var response = this.flightService.readAll(page, size, sortType);
 
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "lower-price")
-    public ResponseEntity<Set<FlyResponse>> getLowerPrice(@RequestParam BigDecimal price){
-        var response = this.flyService.readByLowerPrice(price);
+    public ResponseEntity<Set<FlightResponse>> getLowerPrice(@RequestParam BigDecimal price){
+        var response = this.flightService.readByLowerPrice(price);
 
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "between-price")
-    public ResponseEntity<Set<FlyResponse>> getBetweenPrices(@RequestParam BigDecimal min, @RequestParam BigDecimal max){
-        var response = this.flyService.readBetweenPrices(min, max);
+    public ResponseEntity<Set<FlightResponse>> getBetweenPrices(@RequestParam BigDecimal min, @RequestParam BigDecimal max){
+        var response = this.flightService.readBetweenPrices(min, max);
 
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "origin-destiny")
-    public ResponseEntity<Set<FlyResponse>> getOriginDestiny(@RequestParam String origin, @RequestParam String destiny){
-        var response = this.flyService.readByOriginDestiny(origin, destiny);
+    public ResponseEntity<Set<FlightResponse>> getOriginDestiny(@RequestParam String origin, @RequestParam String destiny){
+        var response = this.flightService.readByOriginDestiny(origin, destiny);
 
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }

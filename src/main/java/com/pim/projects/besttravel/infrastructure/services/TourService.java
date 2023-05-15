@@ -2,11 +2,11 @@ package com.pim.projects.besttravel.infrastructure.services;
 
 import com.pim.projects.besttravel.api.model.request.TourRequest;
 import com.pim.projects.besttravel.api.model.responses.TourResponse;
-import com.pim.projects.besttravel.domain.entity.Fly;
+import com.pim.projects.besttravel.domain.entity.Flight;
 import com.pim.projects.besttravel.domain.entity.Hotel;
 import com.pim.projects.besttravel.domain.entity.Tour;
 import com.pim.projects.besttravel.domain.repository.CustomerRepository;
-import com.pim.projects.besttravel.domain.repository.FlyRepository;
+import com.pim.projects.besttravel.domain.repository.FlightRepository;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.TourRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITourService;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class TourService implements ITourService {
 
     private final TourRepository tourRepository;
-    private final FlyRepository flyRepository;
+    private final FlightRepository flightRepository;
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
@@ -45,10 +45,10 @@ public class TourService implements ITourService {
 
         var customer = customerRepository.findById(request.getCustomerId()).orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
-        var flights = new HashSet<Fly>();
-        request.getFlights().forEach(fly -> {
+        var flights = new HashSet<Flight>();
+        request.getFlights().forEach(flight -> {
             flights.add(
-                    this.flyRepository.findById(fly.getId()).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()))
+                    this.flightRepository.findById(flight.getId()).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()))
             );
         });
 
@@ -102,10 +102,10 @@ public class TourService implements ITourService {
     }
 
     @Override
-    public UUID addTicket(Long flyId, Long tourId) {
+    public UUID addTicket(Long flightId, Long tourId) {
         var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow(() -> new IdNotFoundException(Tables.tour.name()));
-        var fly = this.flyRepository.findById(flyId).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
-        var ticket = tourHelper.createTicket(fly, tourToUpdate.getCustomer());
+        var flight = this.flightRepository.findById(flightId).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()));
+        var ticket = tourHelper.createTicket(flight, tourToUpdate.getCustomer());
         tourToUpdate.addTicket(ticket);
         this.tourRepository.save(tourToUpdate);
         return ticket.getId();

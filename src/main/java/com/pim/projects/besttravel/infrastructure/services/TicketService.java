@@ -1,11 +1,11 @@
 package com.pim.projects.besttravel.infrastructure.services;
 
 import com.pim.projects.besttravel.api.model.request.TicketRequest;
-import com.pim.projects.besttravel.api.model.responses.FlyResponse;
+import com.pim.projects.besttravel.api.model.responses.FlightResponse;
 import com.pim.projects.besttravel.api.model.responses.TicketResponse;
 import com.pim.projects.besttravel.domain.entity.Ticket;
 import com.pim.projects.besttravel.domain.repository.CustomerRepository;
-import com.pim.projects.besttravel.domain.repository.FlyRepository;
+import com.pim.projects.besttravel.domain.repository.FlightRepository;
 import com.pim.projects.besttravel.domain.repository.TicketRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITicketService;
 import com.pim.projects.besttravel.infrastructure.helper.BlackListHelper;
@@ -29,7 +29,7 @@ import java.util.UUID;
 @AllArgsConstructor //inject dependencies automatically
 public class TicketService implements ITicketService {
 
-    private final FlyRepository flyRepository;
+    private final FlightRepository flightRepository;
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
@@ -43,15 +43,15 @@ public class TicketService implements ITicketService {
         //validating is the customer is in black list
         blackListHelper.isBlackListCustomer(request.getIdClient());
 
-        var fly = flyRepository.findById(request.getIdFly()).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
+        var flight = flightRepository.findById(request.getIdFlight()).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()));
         var customer = customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
-        //create ticket to persist to db with the fly and customer request info
+        //create ticket to persist to db with the flight and customer request info
         var ticketToPersist = Ticket.builder()
                 .id(UUID.randomUUID())
-                .fly(fly)
+                .flight(flight)
                 .customer(customer)
-                .price(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
+                .price(flight.getPrice().add(flight.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
                 .purchaseDate(LocalDate.now())
                 .departureDate(BestTravelUtil.getRandomSoonDate())
                 .arrivalDate(BestTravelUtil.getRandomLaterDate())
@@ -79,10 +79,10 @@ public class TicketService implements ITicketService {
     @Override
     public TicketResponse update(TicketRequest request, UUID id) {
         var ticketToUpdate = ticketRepository.findById(id).orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
-        var fly = flyRepository.findById(request.getIdFly()).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
+        var flight = flightRepository.findById(request.getIdFlight()).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()));
 
-        ticketToUpdate.setFly(fly);
-        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
+        ticketToUpdate.setFlight(flight);
+        ticketToUpdate.setPrice(flight.getPrice().add(flight.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
         ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomLaterDate());
         ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLaterDate());
 
@@ -100,9 +100,9 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public BigDecimal findFlyPrice(Long flyId) {
-        var fly = this.flyRepository.findById(flyId).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
-        return fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+    public BigDecimal findFlightPrice(Long flightId) {
+        var flight = this.flightRepository.findById(flightId).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()));
+        return flight.getPrice().add(flight.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
     }
 
 
@@ -111,10 +111,10 @@ public class TicketService implements ITicketService {
 
         //mapping entity to DTO
         BeanUtils.copyProperties(ticketEntity, ticketResponse);
-        var flyResponse = new FlyResponse();
-        BeanUtils.copyProperties(ticketEntity.getFly(), flyResponse);
+        var flightResponse = new FlightResponse();
+        BeanUtils.copyProperties(ticketEntity.getFlight(), flightResponse);
 
-        ticketResponse.setFly(flyResponse);
+        ticketResponse.setFlight(flightResponse);
 
         return ticketResponse;
     }

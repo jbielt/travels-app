@@ -26,14 +26,14 @@ public class TourHelper {
     private final ReservationRepository reservationRepository;
 
 
-    public Set<Ticket> createTickets(Set<Fly> flights, Customer customer){
+    public Set<Ticket> createTickets(Set<Flight> flights, Customer customer){
         var response = new HashSet<Ticket>(flights.size());
-        flights.forEach(fly -> {
+        flights.forEach(flight -> {
             var ticketToPersist = Ticket.builder()
                     .id(UUID.randomUUID())
-                    .fly(fly)
+                    .flight(flight)
                     .customer(customer)
-                    .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
+                    .price(flight.getPrice().add(flight.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
                     .purchaseDate(LocalDate.now())
                     .departureDate(BestTravelUtil.getRandomSoonDate())
                     .arrivalDate(BestTravelUtil.getRandomLaterDate())
@@ -65,12 +65,12 @@ public class TourHelper {
         return response;
     }
 
-    public Ticket createTicket(Fly fly, Customer customer){
+    public Ticket createTicket(Flight flight, Customer customer){
         var ticketToPersist = Ticket.builder()
                 .id(UUID.randomUUID())
-                .fly(fly)
+                .flight(flight)
                 .customer(customer)
-                .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
+                .price(flight.getPrice().add(flight.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
                 .purchaseDate(LocalDate.now())
                 .departureDate(BestTravelUtil.getRandomSoonDate())
                 .arrivalDate(BestTravelUtil.getRandomLaterDate())

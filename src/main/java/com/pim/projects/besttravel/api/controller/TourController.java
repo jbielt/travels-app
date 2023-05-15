@@ -42,9 +42,9 @@ public class TourController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping(path = "{tourId}/add-ticket/{flyId}")
-    public ResponseEntity<Map<String, UUID>> postTicket(@PathVariable Long tourId, @PathVariable Long flyId){
-        var response = Collections.singletonMap("ticketId", this.tourService.addTicket(tourId, flyId));
+    @PatchMapping(path = "{tourId}/add-ticket/{flightId}")
+    public ResponseEntity<Map<String, UUID>> postTicket(@PathVariable Long tourId, @PathVariable Long flightId){
+        var response = Collections.singletonMap("ticketId", this.tourService.addTicket(tourId, flightId));
         return ResponseEntity.ok(response);
     }
 

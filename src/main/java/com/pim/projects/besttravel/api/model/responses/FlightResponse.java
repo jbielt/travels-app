@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Data
 @Builder
-public class FlyResponse implements Serializable {
+public class FlightResponse implements Serializable {
 
     private Long id;
     private Double originLat;

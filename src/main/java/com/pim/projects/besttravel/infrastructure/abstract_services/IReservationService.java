@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface IReservationService extends CrudService<ReservationRequest, ReservationResponse, UUID> {
 
-    BigDecimal findHotelPrice(Long flyId);
+    BigDecimal findHotelPrice(Long flightId);
 }

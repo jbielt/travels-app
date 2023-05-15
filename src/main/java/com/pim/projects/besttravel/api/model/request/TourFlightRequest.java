@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 @Builder
-public class TourFlyRequest implements Serializable {
+public class TourFlightRequest implements Serializable {
 
     private Long id;
 }
