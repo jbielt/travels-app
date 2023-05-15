@@ -9,11 +9,11 @@ import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.ReservationRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IReservationService;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

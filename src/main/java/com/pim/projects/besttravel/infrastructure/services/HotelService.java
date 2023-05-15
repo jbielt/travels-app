@@ -5,19 +5,19 @@ import com.pim.projects.besttravel.domain.entity.Hotel;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IHotelService;
 import com.pim.projects.besttravel.util.enums.SortType;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 @AllArgsConstructor
 public class HotelService implements IHotelService {

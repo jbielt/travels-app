@@ -12,9 +12,9 @@ import com.pim.projects.besttravel.domain.repository.TourRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITourService;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.infrastructure.helper.TourHelper;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.HashSet;
