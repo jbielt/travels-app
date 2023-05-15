@@ -41,10 +41,10 @@ public class TicketService implements ITicketService {
     public TicketResponse create(TicketRequest request) {
 
         //validating is the customer is in black list
-        blackListHelper.isBlackListCustomer(request.getIdClient());
+        blackListHelper.isBlackListCustomer(request.getIdCustomer());
 
         var flight = flightRepository.findById(request.getIdFlight()).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()));
-        var customer = customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
+        var customer = customerRepository.findById(request.getIdCustomer()).orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
         //create ticket to persist to db with the flight and customer request info
         var ticketToPersist = Ticket.builder()

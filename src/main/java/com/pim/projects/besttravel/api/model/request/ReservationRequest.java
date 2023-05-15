@@ -15,8 +15,8 @@ import java.io.Serializable;
 public class ReservationRequest implements Serializable {
 
     @Size(min = 18, max = 20, message = "The size must be between 18 and 20 characters")
-    @NotBlank(message = "Id Client is mandatory")
-    private String idClient;
+    @NotBlank(message = "Id Customer is mandatory")
+    private String idCustomer;
 
     @Positive
     @NotNull(message = "Id Hotel is mandatory")

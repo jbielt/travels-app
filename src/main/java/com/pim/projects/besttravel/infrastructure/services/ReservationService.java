@@ -40,10 +40,10 @@ public class ReservationService implements IReservationService {
     @Override
     public ReservationResponse create(ReservationRequest request) {
         //validating is the customer is in black list
-        blackListHelper.isBlackListCustomer(request.getIdClient());
+        blackListHelper.isBlackListCustomer(request.getIdCustomer());
 
         var hotel = this.hotelRepository.findById(request.getIdHotel()).orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
-        var customer = this.customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
+        var customer = this.customerRepository.findById(request.getIdCustomer()).orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
         var reservationToPersist = Reservation.builder()
                 .id(UUID.randomUUID())
