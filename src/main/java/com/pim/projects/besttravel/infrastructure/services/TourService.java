@@ -10,6 +10,7 @@ import com.pim.projects.besttravel.domain.repository.FlyRepository;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.TourRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITourService;
+import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.infrastructure.helper.TourHelper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class TourService implements ITourService {
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
+    private final CustomerHelper customerHelper;
 
 
     @Override
@@ -58,6 +60,9 @@ public class TourService implements ITourService {
                 .build();
 
         var tourSaved = this.tourRepository.save(tourToSave);
+
+        //increase total tours
+        this.customerHelper.increase(customer.getDni(), TourService.class);
 
         return TourResponse.builder()
                 .reservationIds(tourSaved.getReservations().stream().map(Reservation -> Reservation.getId()).collect(Collectors.toSet()))

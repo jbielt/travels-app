@@ -8,6 +8,7 @@ import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.FlyRepository;
 import com.pim.projects.besttravel.domain.repository.TicketRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITicketService;
+import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.util.BestTravelUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class TicketService implements ITicketService {
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
+    private final CustomerHelper customerHelper;
 
     public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 
@@ -49,6 +51,9 @@ public class TicketService implements ITicketService {
 
         //persist ticket
         var ticketPersisted = this.ticketRepository.save(ticketToPersist);
+
+        //increase total flights
+        this.customerHelper.increase(customer.getDni(), TicketService.class);
 
         log.info("Ticket saved with id: {}", ticketPersisted.getId());
 
