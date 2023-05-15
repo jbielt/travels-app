@@ -10,6 +10,7 @@ import com.pim.projects.besttravel.domain.repository.FlyRepository;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.TourRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITourService;
+import com.pim.projects.besttravel.infrastructure.helper.BlackListHelper;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.infrastructure.helper.TourHelper;
 import com.pim.projects.besttravel.util.exception.IdNotFoundException;
@@ -33,10 +34,14 @@ public class TourService implements ITourService {
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
 
     @Override
     public TourResponse create(TourRequest request) {
+        //validating is the customer is in black list
+        blackListHelper.isBlackListCustomer(request.getCustomerId());
+
         var customer = customerRepository.findById(request.getCustomerId()).orElseThrow(() -> new IdNotFoundException("customer"));
 
         var flights = new HashSet<Fly>();

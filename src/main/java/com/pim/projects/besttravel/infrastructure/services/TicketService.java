@@ -8,6 +8,7 @@ import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.FlyRepository;
 import com.pim.projects.besttravel.domain.repository.TicketRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITicketService;
+import com.pim.projects.besttravel.infrastructure.helper.BlackListHelper;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.util.BestTravelUtil;
 import com.pim.projects.besttravel.util.exception.IdNotFoundException;
@@ -31,11 +32,16 @@ public class TicketService implements ITicketService {
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
     public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 
     @Override
     public TicketResponse create(TicketRequest request) {
+
+        //validating is the customer is in black list
+        blackListHelper.isBlackListCustomer(request.getIdClient());
+
         var fly = flyRepository.findById(request.getIdFly()).orElseThrow(() -> new IdNotFoundException("fly"));
         var customer = customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException("customer"));
 

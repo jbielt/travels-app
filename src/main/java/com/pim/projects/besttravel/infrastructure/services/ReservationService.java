@@ -8,6 +8,7 @@ import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.ReservationRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IReservationService;
+import com.pim.projects.besttravel.infrastructure.helper.BlackListHelper;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.util.exception.IdNotFoundException;
 import lombok.AllArgsConstructor;
@@ -31,11 +32,15 @@ public class ReservationService implements IReservationService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
+    private BlackListHelper blackListHelper;
 
     public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.20);
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
+        //validating is the customer is in black list
+        blackListHelper.isBlackListCustomer(request.getIdClient());
+
         var hotel = this.hotelRepository.findById(request.getIdHotel()).orElseThrow(() -> new IdNotFoundException("hotel"));
         var customer = this.customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException("customer"));
 

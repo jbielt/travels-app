@@ -28,6 +28,6 @@ public class ReservationRequest implements Serializable {
     private Integer totalDays;
 
     //@Pattern(regexp = "^(.+)@(.+)$")
-    @Email
+    @Email(message = "Invalid email")
     private String email;
 }
