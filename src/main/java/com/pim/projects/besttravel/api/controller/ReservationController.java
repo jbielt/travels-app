@@ -1,9 +1,14 @@
 package com.pim.projects.besttravel.api.controller;
 
 import com.pim.projects.besttravel.api.model.request.ReservationRequest;
+import com.pim.projects.besttravel.api.model.responses.ErrorsResponse;
 import com.pim.projects.besttravel.api.model.responses.ReservationResponse;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IReservationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,6 +28,22 @@ public class ReservationController {
 
     private final IReservationService reservationService;
 
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ReservationResponse.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "When the request have an invalid field, we response this",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorsResponse.class))
+                    }
+            )
+        }
+    )
     @Operation(summary = "Save a Reservation in the system based in a Hotel and the Customer")
     @PostMapping
     public ResponseEntity<ReservationResponse> post(@Valid @RequestBody ReservationRequest request){

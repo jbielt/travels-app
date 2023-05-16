@@ -18,7 +18,7 @@ public class ReservationRequest implements Serializable {
     @NotBlank(message = "Id Customer is mandatory")
     private String idCustomer;
 
-    @Positive
+    @Positive(message = "Id Hotel it has to be greater than 0")
     @NotNull(message = "Id Hotel is mandatory")
     private Long idHotel;
 
