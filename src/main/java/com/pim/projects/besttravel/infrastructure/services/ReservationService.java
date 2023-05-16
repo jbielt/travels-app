@@ -8,6 +8,7 @@ import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.HotelRepository;
 import com.pim.projects.besttravel.domain.repository.ReservationRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.IReservationService;
+import com.pim.projects.besttravel.infrastructure.helper.ApiCurrencyConnectorHelper;
 import com.pim.projects.besttravel.infrastructure.helper.BlackListHelper;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.util.enums.Tables;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.UUID;
 
 @Transactional
@@ -33,7 +35,8 @@ public class ReservationService implements IReservationService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
-    private BlackListHelper blackListHelper;
+    private final BlackListHelper blackListHelper;
+    private final ApiCurrencyConnectorHelper apiCurrencyConnectorHelper;
 
     public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.20);
 
@@ -96,9 +99,17 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public BigDecimal findHotelPrice(Long hotelId) {
+    public BigDecimal findPrice(Long hotelId, Currency currency) {
         var hotel = this.hotelRepository.findById(hotelId).orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
-        return hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+        var priceInEur = hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+
+        if(currency.equals(Currency.getInstance("EUR"))) return priceInEur;
+
+        var currencyDTO = this.apiCurrencyConnectorHelper.getCurrency(currency);
+
+        log.info("API currency in {}, response: {}", currencyDTO.getExchangeDate().toString(), currencyDTO.getRates());
+
+        return priceInEur.multiply(currencyDTO.getRates().get(currency));
     }
 
 
