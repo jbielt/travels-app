@@ -18,8 +18,17 @@ public class WebClientConfig {
     private String apiKeyHeader;
 
 
-    @Bean
-    public WebClient webClient(){
+    @Bean(name = "currency")
+    public WebClient currencyWebClient(){
+        return WebClient
+                .builder()
+                .baseUrl(baseUrl)
+                .defaultHeader(apiKeyHeader, apiKey)
+                .build();
+    }
+
+    @Bean(name = "base")
+    public WebClient baseWebClient(){
         return WebClient
                 .builder()
                 .baseUrl(baseUrl)

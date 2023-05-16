@@ -7,11 +7,13 @@ import com.pim.projects.besttravel.infrastructure.abstract_services.IFlightServi
 import com.pim.projects.besttravel.util.enums.SortType;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -19,10 +21,17 @@ import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor //lombock is not compatible with @Qualifier
 public class FlightService implements IFlightService {
 
     private final FlightRepository flightRepository;
+    private final WebClient webClient;
+
+
+    public FlightService(FlightRepository flightRepository, @Qualifier(value = "currency") WebClient webClient) {
+        this.flightRepository = flightRepository;
+        this.webClient = webClient;
+    }
 
     @Override
     public Page<FlightResponse> readAll(Integer page, Integer size, SortType sortType) {
