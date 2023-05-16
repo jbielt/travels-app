@@ -70,7 +70,7 @@ public class TicketController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Return the Flight price with the id sent by parameter")
+    @Operation(summary = "Return the Ticket Flight price with the id sent by parameter")
     @GetMapping
     public ResponseEntity<Map<String, BigDecimal>> getFlightPrice(@RequestParam Long flightId){
         return ResponseEntity.ok(Collections.singletonMap("flightPrice",this.ticketService.findFlightPrice(flightId)));

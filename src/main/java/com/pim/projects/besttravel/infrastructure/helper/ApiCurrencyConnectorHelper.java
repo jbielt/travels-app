@@ -16,7 +16,7 @@ public class ApiCurrencyConnectorHelper {
     @Value(value = "${api.base-currency}")
     private String baseCurrency;
 
-    private static final String BASE_CURRENCY_QUERY_PARAM = "?base={base}";
+    private static final String BASE_CURRENCY_QUERY_PARAM = "base={base}";
     private static final String SYMBOL_CURRENCY_QUERY_PARAM = "&symbols={symbol}";
     private static final String CURRENCY_PATH = "/fixer/latest";
 
