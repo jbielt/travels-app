@@ -8,6 +8,7 @@ import com.pim.projects.besttravel.domain.repository.CustomerRepository;
 import com.pim.projects.besttravel.domain.repository.FlightRepository;
 import com.pim.projects.besttravel.domain.repository.TicketRepository;
 import com.pim.projects.besttravel.infrastructure.abstract_services.ITicketService;
+import com.pim.projects.besttravel.infrastructure.helper.ApiCurrencyConnectorHelper;
 import com.pim.projects.besttravel.infrastructure.helper.BlackListHelper;
 import com.pim.projects.besttravel.infrastructure.helper.CustomerHelper;
 import com.pim.projects.besttravel.util.BestTravelUtil;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.UUID;
 
 @Transactional
@@ -34,6 +36,7 @@ public class TicketService implements ITicketService {
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
+    private final ApiCurrencyConnectorHelper apiCurrencyConnectorHelper;
 
     public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 
@@ -100,9 +103,15 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public BigDecimal findFlightPrice(Long flightId) {
+    public BigDecimal findFlightPrice(Long flightId, Currency currency) {
         var flight = this.flightRepository.findById(flightId).orElseThrow(() -> new IdNotFoundException(Tables.flight.name()));
-        return flight.getPrice().add(flight.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+
+        if (currency.equals(Currency.getInstance("EUR"))) return flight.getPrice().add(flight.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+        var currencyDTO = this.apiCurrencyConnectorHelper.getCurrency(currency);
+
+        log.info("API currency in {}, response: {}", currencyDTO.getExchangeDate().toString(), currencyDTO.getRates());
+
+        return flight.getPrice().add(flight.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)).multiply(currencyDTO.getRates().get(currency));
     }
 
 

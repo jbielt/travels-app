@@ -17,9 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "ticket")
@@ -72,8 +70,9 @@ public class TicketController {
 
     @Operation(summary = "Return the Ticket Flight price with the id sent by parameter")
     @GetMapping
-    public ResponseEntity<Map<String, BigDecimal>> getFlightPrice(@RequestParam Long flightId){
-        return ResponseEntity.ok(Collections.singletonMap("flightPrice",this.ticketService.findFlightPrice(flightId)));
+    public ResponseEntity<Map<String, BigDecimal>> getFlightPrice(@RequestParam Long flightId, @RequestHeader(required = false)Currency currency){
+        if (Objects.isNull(currency)) currency = Currency.getInstance("EUR");
+        return ResponseEntity.ok(Collections.singletonMap("flightPrice",this.ticketService.findFlightPrice(flightId, currency)));
     }
 
 }
